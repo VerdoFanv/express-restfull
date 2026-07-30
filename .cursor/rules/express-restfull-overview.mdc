@@ -1,0 +1,46 @@
+---
+description: Architecture overview for Express RESTfull (clean architecture + REST)
+alwaysApply: true
+---
+
+# Express RESTfull — Overview
+
+RESTful backend with **clean architecture**.
+
+## Stack
+
+- **Express** — HTTP router
+- **Prisma** + **PostgreSQL** — persistence
+- **ioredis** — cache
+- **RabbitMQ (amqplib)** — async events
+- **JWT** + **apikey** header — auth
+
+## Struktur folder
+
+| Path | Isi |
+|------|-----|
+| `src/server.ts` | Entry HTTP API |
+| `src/worker.ts` | Consumer RabbitMQ |
+| `src/modules/<feature>/` | Feature: `routes`, `service`, `repository` |
+| `src/domain/` | Types + AppError |
+| `src/middleware/` | Auth, API key |
+| `src/platform/` | Infra adapters (db, redis, rabbitmq) |
+| `src/config/` | Env config |
+| `src/shared/` | Envelope JSON + logger |
+| `docs/` | OpenAPI + Swagger UI |
+| `test/` | Unit + integration tests |
+
+## Alur request
+
+`Router → Service → Repository → DB/Cache/MQ`
+
+## Kontrak API
+
+```json
+{ "success": true, "message": "success", "data": {} }
+{ "success": false, "message": "unauthorized" }
+```
+
+- JSON field: **camelCase**
+- Prefix route: `/api/v1`
+- Header: `apikey` + `Authorization: Bearer <token>`

@@ -1,0 +1,17 @@
+node_modules/
+dist/
+tmp/
+coverage/
+*.log
+*.out
+
+.env
+.idea/
+.vscode/
+*.swp
+
+.DS_Store
+
+coverage/
+coverage.html
+lcov.info
