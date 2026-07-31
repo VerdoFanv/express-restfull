@@ -12,30 +12,10 @@ servers:
     description: Local
 
 tags:
-  - name: Health
   - name: Authentication
   - name: Products
 
 paths:
-  /health:
-    get:
-      tags: [Health]
-      summary: Health check
-      security:
-        - ApiKeyAuth: []
-      responses:
-        "200":
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SuccessEnvelope"
-              example:
-                success: true
-                message: ok
-                data:
-                  status: healthy
-
   /authentication/register:
     post:
       tags: [Authentication]

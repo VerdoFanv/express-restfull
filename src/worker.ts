@@ -4,12 +4,12 @@ import { RabbitMQClient, type RabbitEvent } from "@/platform/rabbitmq.js";
 import { logger } from "@/shared/logger.js";
 
 async function main(): Promise<void> {
-  const cfg = loadConfig();
-  const mq = await RabbitMQClient.connect(cfg);
+  const config = loadConfig();
+  const mq = await RabbitMQClient.connect(config);
 
-  logger.info({ queue: cfg.rabbitQueue }, "worker listening");
+  logger.info({ queue: config.rabbitQueue }, "worker listening");
 
-  await mq.consume(cfg.rabbitQueue, async (msg) => {
+  await mq.consume(config.rabbitQueue, async (msg) => {
     let event: RabbitEvent;
     try {
       event = JSON.parse(msg.content.toString()) as RabbitEvent;

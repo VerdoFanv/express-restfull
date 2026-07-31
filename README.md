@@ -121,18 +121,17 @@ Protected routes also need:
 Authorization: Bearer <accessToken>
 ```
 
-| Method   | Path                                   | Auth            | Notes              |
-| -------- | -------------------------------------- | --------------- | ------------------ |
-| `GET`    | `/api/v1/health`                       | apikey          | Liveness / DB ping |
-| `POST`   | `/api/v1/authentication/register`      | apikey          | Create account     |
-| `POST`   | `/api/v1/authentication/login`         | apikey          | Issue tokens       |
-| `POST`   | `/api/v1/authentication/refresh-token` | apikey          | Rotate tokens      |
-| `GET`    | `/api/v1/authentication/me`            | apikey + bearer | Current user       |
-| `GET`    | `/api/v1/products`                     | apikey + bearer | List (cached)      |
-| `POST`   | `/api/v1/products`                     | apikey + bearer | Create + MQ event  |
-| `GET`    | `/api/v1/products/:id`                 | apikey + bearer | Detail (cached)    |
-| `PUT`    | `/api/v1/products/:id`                 | apikey + bearer | Update (owner)     |
-| `DELETE` | `/api/v1/products/:id`                 | apikey + bearer | Delete (owner)     |
+| Method   | Path                                   | Auth            | Notes             |
+| -------- | -------------------------------------- | --------------- | ----------------- |
+| `POST`   | `/api/v1/authentication/register`      | apikey          | Create account    |
+| `POST`   | `/api/v1/authentication/login`         | apikey          | Issue tokens      |
+| `POST`   | `/api/v1/authentication/refresh-token` | apikey          | Rotate tokens     |
+| `GET`    | `/api/v1/authentication/me`            | apikey + bearer | Current user      |
+| `GET`    | `/api/v1/products`                     | apikey + bearer | List (cached)     |
+| `POST`   | `/api/v1/products`                     | apikey + bearer | Create + MQ event |
+| `GET`    | `/api/v1/products/:id`                 | apikey + bearer | Detail (cached)   |
+| `PUT`    | `/api/v1/products/:id`                 | apikey + bearer | Update (owner)    |
+| `DELETE` | `/api/v1/products/:id`                 | apikey + bearer | Delete (owner)    |
 
 Full schemas: [`docs/openapi.yaml`](docs/openapi.yaml)
 
@@ -191,7 +190,6 @@ src/
   modules/
     auth/                Register, login, refresh, me
     product/             CRUD + cache + events
-    health/              Health check
   platform/              Postgres, Redis, RabbitMQ adapters
   shared/                Envelope + logger + HTTP helpers
 prisma/                  Schema & migrations

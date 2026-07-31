@@ -51,6 +51,7 @@ export function createProductRouter(
         fail(res, 401, DomainErrors.unauthorized().message);
         return;
       }
+
       try {
         const products = await service.list(req.userId);
         ok(res, "success", products);
@@ -68,6 +69,7 @@ export function createProductRouter(
         fail(res, 401, DomainErrors.unauthorized().message);
         return;
       }
+
       try {
         const product = await service.create({
           userId: req.userId,
@@ -105,6 +107,7 @@ export function createProductRouter(
         fail(res, 401, DomainErrors.unauthorized().message);
         return;
       }
+
       try {
         const id = parseId(String(req.params.id));
         const product = await service.update(req.userId, id, req.body);
@@ -126,6 +129,7 @@ export function createProductRouter(
         fail(res, 401, DomainErrors.unauthorized().message);
         return;
       }
+
       try {
         const id = parseId(String(req.params.id));
         await service.delete(req.userId, id);

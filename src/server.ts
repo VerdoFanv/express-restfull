@@ -8,25 +8,28 @@ import { RedisClient } from "@/platform/redis.js";
 import { logger } from "@/shared/logger.js";
 
 async function main(): Promise<void> {
-  const cfg = loadConfig();
-  const prisma = createPrisma(cfg);
+  const config = loadConfig();
+  const prisma = createPrisma(config);
 
-  await connectDatabase(prisma, cfg);
+  await connectDatabase(prisma, config);
 
-  const redis = await RedisClient.connect(cfg);
+  const redis = await RedisClient.connect(config);
 
   let mq: RabbitMQClient | null = null;
   try {
-    mq = await RabbitMQClient.connect(cfg);
+    mq = await RabbitMQClient.connect(config);
   } catch (error) {
     logger.warn({ err: error }, "rabbitmq unavailable, events will be skipped");
   }
 
-  const app = createApp({ cfg, prisma, redis, mq });
+  const app = createApp({ cfg: config, prisma, redis, mq });
   const server = http.createServer(app);
 
-  server.listen(cfg.appPort, () => {
-    logger.info({ addr: `:${cfg.appPort}`, env: cfg.appEnv }, "api listening");
+  server.listen(config.appPort, () => {
+    logger.info(
+      { addr: `:${config.appPort}`, env: config.appEnv },
+      "api listening",
+    );
   });
 
   const shutdown = async (signal: string) => {

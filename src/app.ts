@@ -8,7 +8,6 @@ import { apiKey } from "@/middleware/api-key.js";
 import { createAuthRepository } from "@/modules/auth/repository.js";
 import { createAuthRouter } from "@/modules/auth/routes.js";
 import { AuthService } from "@/modules/auth/service.js";
-import { createHealthRouter } from "@/modules/health/routes.js";
 import { createProductRepository } from "@/modules/product/repository.js";
 import { createProductRouter } from "@/modules/product/routes.js";
 import { ProductService } from "@/modules/product/service.js";
@@ -63,7 +62,6 @@ export function createApp(deps: AppDeps): Express {
 
   const api = express.Router();
   api.use(apiKey(cfg.apiKey));
-  api.use(createHealthRouter(prisma));
   api.use("/authentication", createAuthRouter(authService, cfg.jwtSecret));
   api.use("/products", createProductRouter(productService, cfg.jwtSecret));
 
